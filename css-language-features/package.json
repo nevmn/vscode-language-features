@@ -1,0 +1,11 @@
+{
+  "name": "css-language-features",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+      "css-languageserver": "node/cssServerMain.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
