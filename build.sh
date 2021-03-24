@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
 HOME=$(pwd)
-CSS="vscode/extensions/css-language-features/server"
-HTML="vscode/extensions/html-language-features/server"
-JSON="vscode/extensions/json-language-features/server"
 
-cd $CSS && yarn && cd $HOME && tsc -p $CSS --lib 'webworker' && npm pack $CSS && cd $HOME && \
-cd $HTML && yarn && yarn add -D typescript && cd $HOME && tsc -p $HTML --lib 'webworker' && npm pack $HTML && cd $HOME && \
-cd $JSON && yarn && cd $HOME && tsc -p $JSON --lib 'webworker' && npm pack $JSON && cd $HOME
+for server in "css" "html" "json"
+do
+    folder="./vscode/extensions/$server-language-features/server"
+    cd "$folder" && \
+        yarn && \
+        yarn add -D typescript && \
+        cd "$HOME" && \
+        tsc -p "$folder" --lib 'webworker' --outDir "./$server-language-features" && \
+        cp "$folder/package.json" "./$server-language-features" && \
+        sed -i '$s/}/,\n"bin":{"'"$server"'-languageserver":"node\/'"$server"'ServerMain.js"}\n}/' "./$server-language-features/package.json" && \
+        sed -i '1s;^;#!/usr/bin/env node\n;' "$server-language-features/node/${server}ServerMain.js" && \
+        npm pack "./$server-language-features"
+done
