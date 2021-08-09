@@ -2,9 +2,9 @@
 
 HOME=$(pwd)
 
-version=1.58.2
+version=1.59.0
 
-yarn add typescript@4.4.0-dev.20210607
+yarn add typescript@^4.4.0-dev.20210719
 
 for server in "css" "html" "json"
 do
