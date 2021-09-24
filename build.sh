@@ -2,7 +2,7 @@
 
 HOME=$(pwd)
 
-version=1.60.0
+version=1.60.2
 
 yarn add typescript@^4.5.0-dev.20210817
 
